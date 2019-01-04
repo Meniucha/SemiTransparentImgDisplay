@@ -19,5 +19,7 @@
         /// Closes the <see cref="IDisplayable"/>
         /// </summary>
         void Close();
+
+        double Opacity();
     }
 }

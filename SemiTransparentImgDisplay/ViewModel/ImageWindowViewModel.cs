@@ -16,8 +16,6 @@ namespace SemiTransparentImgDisplay.ViewModel
     /// </summary>
     public class ImageWindowViewModel
     {
-        public ImageSource ImageSource { get; set; }
-
         public RelayCommand<Window> CloseCommand { get; set; }
 
         public ImageWindowViewModel()

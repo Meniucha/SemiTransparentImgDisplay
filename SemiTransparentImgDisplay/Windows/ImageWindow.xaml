@@ -9,26 +9,20 @@
         xmlns:Helpers.Behaviors="clr-namespace:SemiTransparentImgDisplay.Helpers.Behaviors"
         mc:Ignorable="d"
         Title="ImageWindow" Height="450" Width="800"
-        
+        DataContext="{Binding Source={StaticResource Locator}, Path=ImageViewModel}"
         >
 
     <i:Interaction.Behaviors>
         <Helpers.Behaviors:DragMoveBehavior/>
     </i:Interaction.Behaviors>
-    
-    <Window.Resources>
-        <viewModel:ImageWindowViewModel x:Key="ViewModel"/>
-    </Window.Resources>
-    <Window.DataContext>
-        <Binding Source="{StaticResource ViewModel}"/>
-    </Window.DataContext>
 
     <Grid Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-        <Image Source="{Binding ImageSource}"/>
+        <!---ImageSource is usually set when creating the window object-->
+        <Image x:Name="Image"/>
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Close"
-                          Command="{Binding Source={StaticResource ViewModel}, Path=CloseCommand}"
+                          Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.CloseCommand}"
                           CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Tag}"/>
             </ContextMenu>
         </Grid.ContextMenu> 

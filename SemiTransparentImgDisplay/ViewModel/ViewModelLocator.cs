@@ -43,6 +43,7 @@ namespace SemiTransparentImgDisplay.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ImageWindowViewModel>();
             SimpleIoc.Default.Register<IImageDisplayService, ImageDisplayService>();
         }
 
@@ -54,6 +55,14 @@ namespace SemiTransparentImgDisplay.ViewModel
             }
         }
         
+        public ImageWindowViewModel ImageViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ImageWindowViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

@@ -54,7 +54,7 @@ namespace SemiTransparentImgDisplay.ViewModel
         /// </summary>
         private void OnOpenImage()
         {
-            _imageDisplayService.Create(@"C:\Users\meni\Desktop\mechanika.png").Display();
+            _imageDisplayService.Create(@"C:\Users\menid\OneDrive\Pulpit\zbiorniczki.png").Display();
         }
 
 

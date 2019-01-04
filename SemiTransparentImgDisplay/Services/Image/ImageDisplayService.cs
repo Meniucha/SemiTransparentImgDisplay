@@ -14,14 +14,8 @@ namespace SemiTransparentImgDisplay.Services.Image
 
         /// <inheritdoc />
         public IDisplayable Create(string path)
-        {
-            ImageWindow window = new ImageWindow();
-            ImageWindowViewModel vm = new ImageWindowViewModel();
-            vm.ImageSource = new BitmapImage(new Uri(path));
-            window.DataContext = vm;
-            
-            
-            IDisplayable displayable = new Displayable(window);
+        {    
+            IDisplayable displayable = new Displayable(new BitmapImage(new Uri(path)));
             Displayables.Add(displayable);
 
             return displayable;

@@ -1,10 +1,12 @@
-﻿using System.Windows;
+﻿using SemiTransparentImgDisplay.Windows;
+using System.Windows;
+using System.Windows.Media;
 
 namespace SemiTransparentImgDisplay.Services.Image
 {
     public class Displayable : IDisplayable
     {
-        private readonly Window _window;
+        private readonly ImageWindow _window;
 
         /// <inheritdoc />
         public object DataContext
@@ -25,9 +27,10 @@ namespace SemiTransparentImgDisplay.Services.Image
             _window.Close();
         }
 
-        public Displayable(Window window)
+        public Displayable(ImageSource imageSource)
         {
-            this._window = window;
+            _window = new ImageWindow();
+            _window.Image.Source = imageSource;
         }
     }
 }
