@@ -4,25 +4,94 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemiTransparentImgDisplay"
+        xmlns:model="clr-namespace:SemiTransparentImgDisplay.Model"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainViewModelWindow" Height="450" Width="800"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}">
+        Title="MainViewModelWindow" 
+        Height="450" 
+        Width="900"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
+        >
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding CloseDisplayedImageCommand}"/>
+            <i:InvokeCommandAction Command="{Binding CloseAllImagesCommand}"/>
         </i:EventTrigger>
+        
     </i:Interaction.Triggers>
-    
-    
+
+    <Window.Resources>
+        <ContextMenu x:Key="WindowContextMenu">
+            <MenuItem Header="Add"
+                      Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.OpenImageCommand}"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <Window.ContextMenu>
+        <StaticResource ResourceKey="WindowContextMenu"/>
+    </Window.ContextMenu>
     <Grid>
-        <Button Command="{Binding OpenImageCommand}"
+        <ListView ItemsSource="{Binding Displayables}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Path"
+                                    DisplayMemberBinding="{Binding Path}"/>
+                    <GridViewColumn Header="Opacity">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Slider Value="{Binding Opacity}" 
+                                        d:DataContext="{d:DesignInstance model:DisplayableImage}"
+                                        Width="100"
+                                        Maximum="1"
+                                        TickFrequency="0.01"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Clickable">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Clickable}"
+                                          d:DataContext="{d:DesignInstance model:DisplayableImage}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Stay on top">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding StayOnTop}"
+                                          d:DataContext="{d:DesignInstance model:DisplayableImage}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+
+            </ListView.View>
+            <ListView.Resources>
+                <ContextMenu x:Key="ListViewItemContextMenu">
+                    <MenuItem Header="Add"
+                              Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.OpenImageCommand}"/>
+                    <!--PlacementTarget type is ListViewItem -->
+                    <MenuItem Header="Remove" 
+                              Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseImageCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Content}"/>
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+
+
+
+        <!--<Button Command="{Binding OpenImageCommand}"
                 Width="100"/>
 
         <Button Command="{Binding CloseDisplayedImageCommand}"
                 Width="100"
                 HorizontalAlignment="Right"
-                Content="Remove all"/>
+                Content="Remove all"/>-->
     </Grid>
 </Window>

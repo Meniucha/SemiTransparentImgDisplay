@@ -8,23 +8,41 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Helpers.Behaviors="clr-namespace:SemiTransparentImgDisplay.Helpers.Behaviors"
         mc:Ignorable="d"
-        Title="ImageWindow" Height="450" Width="800"
+        Title="{Binding ElementName=Image, Path=Name}"
         DataContext="{Binding Source={StaticResource Locator}, Path=ImageViewModel}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
         >
+
 
     <i:Interaction.Behaviors>
         <Helpers.Behaviors:DragMoveBehavior/>
     </i:Interaction.Behaviors>
 
-    <Grid Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-        <!---ImageSource is usually set when creating the window object-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SizeChanged">
+            <i:InvokeCommandAction Command="{Binding MaintainAspectRatioCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding MaintainAspectRatioCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Close"
+                      Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.CloseCommand}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+
+    <Grid>
+        <!---ImageSource should be set when creating the window object-->
         <Image x:Name="Image"/>
-        <Grid.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Close"
-                          Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.CloseCommand}"
-                          CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Tag}"/>
-            </ContextMenu>
-        </Grid.ContextMenu> 
     </Grid>
 </Window>

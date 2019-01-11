@@ -1,29 +1,35 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media.Imaging;
+using SemiTransparentImgDisplay.Model;
 using SemiTransparentImgDisplay.ViewModel;
 using SemiTransparentImgDisplay.Windows;
 
 namespace SemiTransparentImgDisplay.Services.Image
 {
     /// <inheritdoc />
-    public class ImageDisplayService : IImageDisplayService
+    public class ImageDisplayService : IDisplayService
     {
         /// <inheritdoc />
-        public ObservableCollection<IDisplayable> Displayables { get; set; }
+        public ObservableCollection<IDisplayableImage> Displayables { get; set; }
 
         /// <inheritdoc />
-        public IDisplayable Create(string path)
+        public IDisplayableImage Create(string path)
         {    
-            IDisplayable displayable = new Displayable(new BitmapImage(new Uri(path)));
-            Displayables.Add(displayable);
-
-            return displayable;
+            IDisplayableImage displayableImage = new DisplayableImage(path);
+            Displayables.Add(displayableImage);
+            displayableImage.Closed += OnImageClosed;
+            return displayableImage;
         }
 
-        public void CloseAll()
+        /// <inheritdoc />
+        public void RemoveAndCloseAll()
         {
-            foreach (IDisplayable displayable in Displayables)
+            //Reverse() is called to make the Close and OnImageClosed methods not invalidate the Displayables enumerator
+            foreach (IDisplayableImage displayable in Displayables.Reverse())
             {
                 displayable.Close();
             }
@@ -33,7 +39,12 @@ namespace SemiTransparentImgDisplay.Services.Image
         /// <inheritdoc />
         public ImageDisplayService()
         {
-            Displayables = new ObservableCollection<IDisplayable>();
+            Displayables = new ObservableCollection<IDisplayableImage>();
+        }
+
+        public void OnImageClosed(object s, EventArgs e)
+        {
+            Displayables.Remove(s as IDisplayableImage);
         }
     }
 }
