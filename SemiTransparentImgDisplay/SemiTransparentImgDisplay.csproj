@@ -93,7 +93,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\Behaviors\DragMoveBehavior.cs" />
-    <Compile Include="Helpers\Converters\HeightToWidthConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Model\DisplayableImage.cs" />
     <Compile Include="Model\IDisplayableImage.cs" />
