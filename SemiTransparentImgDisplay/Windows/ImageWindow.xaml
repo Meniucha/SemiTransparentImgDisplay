@@ -19,19 +19,8 @@
 
     <i:Interaction.Behaviors>
         <Helpers.Behaviors:DragMoveBehavior/>
+        <Helpers.Behaviors:MaintainImageAspectRatioBehavior/>
     </i:Interaction.Behaviors>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="SizeChanged">
-            <i:InvokeCommandAction Command="{Binding MaintainAspectRatioCommand}"
-                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
-        </i:EventTrigger>
-
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding MaintainAspectRatioCommand}"
-                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <Window.ContextMenu>
         <ContextMenu>

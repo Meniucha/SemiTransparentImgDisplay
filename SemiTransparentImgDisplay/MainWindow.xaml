@@ -15,7 +15,11 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding SaveCurrentImagesCommand}"/>
             <i:InvokeCommandAction Command="{Binding CloseAllImagesCommand}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadStoredImagesCommand}"/>
         </i:EventTrigger>
         
     </i:Interaction.Triggers>
@@ -24,6 +28,8 @@
         <ContextMenu x:Key="WindowContextMenu">
             <MenuItem Header="Add"
                       Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.OpenImageCommand}"/>
+            <MenuItem Header="Remove all"
+                      Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseAllImagesCommand}"/>
         </ContextMenu>
     </Window.Resources>
 

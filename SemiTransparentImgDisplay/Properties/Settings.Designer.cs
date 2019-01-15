@@ -31,5 +31,17 @@ namespace SemiTransparentImgDisplay.Properties {
                 return ((string)(this["ImageFileFormats"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CurrentImages {
+            get {
+                return ((string)(this["CurrentImages"]));
+            }
+            set {
+                this["CurrentImages"] = value;
+            }
+        }
     }
 }

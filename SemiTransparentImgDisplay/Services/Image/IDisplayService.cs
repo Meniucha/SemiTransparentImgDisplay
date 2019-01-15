@@ -22,6 +22,13 @@ namespace SemiTransparentImgDisplay.Services.Image
         IDisplayableImage Create(string path);
 
         /// <summary>
+        /// Adds the passed <see cref="IDisplayableImage"/> to the <see cref="Displayables"/> collection
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        IDisplayableImage Add(IDisplayableImage image);
+
+        /// <summary>
         /// Closes and removes all <see cref="IDisplayableImage"/>s from the <see cref="Displayables"/> collection
         /// </summary>
         void RemoveAndCloseAll();

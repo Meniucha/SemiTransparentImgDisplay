@@ -16,6 +16,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using SemiTransparentImgDisplay.Services.Dialog;
 using SemiTransparentImgDisplay.Services.Image;
+using SemiTransparentImgDisplay.Services.Serialization;
 
 namespace SemiTransparentImgDisplay.ViewModel
 {
@@ -47,6 +48,7 @@ namespace SemiTransparentImgDisplay.ViewModel
             SimpleIoc.Default.Register<ImageViewModel>();
             SimpleIoc.Default.Register<IDisplayService, ImageDisplayService>();
             SimpleIoc.Default.Register<IFileDialogService, FileDialogService>();
+            SimpleIoc.Default.Register<ISerializer, Serializer>();
         }
 
         public MainViewModel MainViewModel

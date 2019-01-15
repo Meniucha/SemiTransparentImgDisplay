@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Media.Imaging;
 using SemiTransparentImgDisplay.Model;
-using SemiTransparentImgDisplay.ViewModel;
-using SemiTransparentImgDisplay.Windows;
 
 namespace SemiTransparentImgDisplay.Services.Image
 {
@@ -20,9 +15,14 @@ namespace SemiTransparentImgDisplay.Services.Image
         public IDisplayableImage Create(string path)
         {    
             IDisplayableImage displayableImage = new DisplayableImage(path);
-            Displayables.Add(displayableImage);
-            displayableImage.Closed += OnImageClosed;
-            return displayableImage;
+            return this.Add(displayableImage);
+        }
+
+        public IDisplayableImage Add(IDisplayableImage image)
+        {
+            Displayables.Add(image);
+            image.Closed += OnImageClosed;
+            return image;
         }
 
         /// <inheritdoc />

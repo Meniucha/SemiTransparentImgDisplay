@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SemiTransparentImgDisplay.Model;
@@ -23,12 +17,9 @@ namespace SemiTransparentImgDisplay.ViewModel
         /// </summary>
         public RelayCommand<Window> CloseCommand { get; set; }
 
-        public RelayCommand<ImageWindow> MaintainAspectRatioCommand { get; set; }
-
         public ImageViewModel()
         {
             CloseCommand = new RelayCommand<Window>(OnClose);
-            MaintainAspectRatioCommand = new RelayCommand<ImageWindow>(OnMaintainAspectRatio);
         }
 
         /// <summary>
@@ -38,13 +29,6 @@ namespace SemiTransparentImgDisplay.ViewModel
         private void OnClose(Window window)
         {
             window.Close();
-        }
-
-        private void OnMaintainAspectRatio(ImageWindow window)
-        {
-            double aspectRatio = window.Image.Source.Width / window.Image.Source.Height;
-
-            window.Width = aspectRatio * window.Height;
-        }
+        }   
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media;
+using Newtonsoft.Json;
 
 namespace SemiTransparentImgDisplay.Model
 {
@@ -12,7 +12,18 @@ namespace SemiTransparentImgDisplay.Model
         /// <summary>
         /// Rendering object of the <see cref="IDisplayableImage"/>
         /// </summary>
+        [JsonIgnore]
         Window DisplayHandler { get; }
+
+        /// <summary>
+        /// Horizontal position of the <see cref="IDisplayableImage"/>
+        /// </summary>
+        double PosX { get; set; }
+
+        /// <summary>
+        /// Vertical position of the <see cref="IDisplayableImage"/>
+        /// </summary>
+        double PosY { get; set; }
 
         /// <summary>
         /// Opacity of the <see cref="IDisplayableImage"/>
