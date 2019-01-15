@@ -26,6 +26,16 @@ namespace SemiTransparentImgDisplay.Model
         double PosY { get; set; }
 
         /// <summary>
+        /// Width of the <see cref="IDisplayableImage"/>
+        /// </summary>
+        double Width { get; set; }
+
+        /// <summary>
+        /// Height of the <see cref="IDisplayableImage"/>
+        /// </summary>
+        double Height { get; set; }
+
+        /// <summary>
         /// Opacity of the <see cref="IDisplayableImage"/>
         /// </summary>
         /// <returns></returns>

@@ -64,6 +64,20 @@ namespace SemiTransparentImgDisplay.Model
         public string Path { get; set; }
 
         /// <inheritdoc />
+        public double Width
+        {
+            get => _window.Width;
+            set => _window.Width = value;
+        }
+
+        /// <inheritdoc />
+        public double Height
+        {
+            get => _window.Height;
+            set => _window.Height = value;
+        }
+
+        /// <inheritdoc />
         public void Display()
         {
             _window.Show();
@@ -92,13 +106,15 @@ namespace SemiTransparentImgDisplay.Model
         }
 
         [JsonConstructor]
-        public DisplayableImage(double opacity, double posX, double posY, bool clickable, bool stayOnTop, string path) : this(path)
-        { 
+        public DisplayableImage(double opacity, double posX, double posY, bool clickable, bool stayOnTop, string path, double height, double width) : this(path)
+        {
             Opacity = opacity;
             Clickable = clickable;
             StayOnTop = stayOnTop;
             PosX = posX;
             PosY = posY;
+            Width = width;
+            Height = height;
         }
     }
 }
