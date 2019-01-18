@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
+using SemiTransparentImgDisplay.Helpers.Windows;
 using SemiTransparentImgDisplay.Windows;
 
 namespace SemiTransparentImgDisplay.Helpers.Behaviors
@@ -34,30 +35,39 @@ namespace SemiTransparentImgDisplay.Helpers.Behaviors
             }
         }
 
+        /// <summary>
+        /// Maintains the aspect ratio of <see cref="ImageWindow.Image"/>
+        /// <para></para>
+        /// Using <see cref="WindowsService.ShowWindowContentWhileDraggingIsEnabled"/> determines the approach in keeping the aspect ratio in order to minimize flickering while resizing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AssociatedObjectSizeChangedMaintainAspectRatio(object sender, SizeChangedEventArgs e)
         {
             if (sender is ImageWindow window)
             {
-                //double aspectRatio = window.Image.Source.Width / window.Image.Source.Height;
-
-                //double percentWidthChange = Math.Abs(e.NewSize.Width - e.PreviousSize.Width) / e.PreviousSize.Width;
-                //double percentHeightChange = Math.Abs(e.NewSize.Height - e.PreviousSize.Height) / e.PreviousSize.Height;
-
-                //if (percentWidthChange > percentHeightChange)
-                //{
-                //    window.Height = e.NewSize.Width / aspectRatio;
-                //}
-                //else
-                //{
-                //    window.Width = e.NewSize.Height * aspectRatio;
-                //}
-
                 double aspectRatio = window.Image.Source.Width / window.Image.Source.Height;
+                if (WindowsService.ShowWindowContentWhileDraggingIsEnabled())
+                {
+                    window.Height = e.NewSize.Height;
+                    window.Width = e.NewSize.Height * aspectRatio;
+                }
+                else
+                {
+                    double percentWidthChange = Math.Abs(e.NewSize.Width - e.PreviousSize.Width) / e.PreviousSize.Width;
+                    double percentHeightChange = Math.Abs(e.NewSize.Height - e.PreviousSize.Height) / e.PreviousSize.Height;
 
-                double newWidth = e.NewSize.Height * aspectRatio;
+                    if (percentWidthChange > percentHeightChange)
+                    {
+                        window.Height = e.NewSize.Width / aspectRatio;
+                    }
+                    else
+                    {
+                        window.Width = e.NewSize.Height * aspectRatio;
+                    }
+                }
 
-                window.Height = e.NewSize.Height;
-                window.Width = newWidth;
+                
             }
         }
     }

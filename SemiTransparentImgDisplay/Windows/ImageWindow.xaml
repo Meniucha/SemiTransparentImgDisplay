@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Helpers.Behaviors="clr-namespace:SemiTransparentImgDisplay.Helpers.Behaviors"
         mc:Ignorable="d"
-        Title="{Binding ElementName=Image, Path=Name}"
+        Title="{Binding ElementName=Image, Path=Source}"
         DataContext="{Binding Source={StaticResource Locator}, Path=ImageViewModel}"
         Background="{x:Null}"
         AllowsTransparency="True"
