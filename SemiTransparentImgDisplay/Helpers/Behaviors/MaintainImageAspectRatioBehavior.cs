@@ -38,19 +38,26 @@ namespace SemiTransparentImgDisplay.Helpers.Behaviors
         {
             if (sender is ImageWindow window)
             {
+                //double aspectRatio = window.Image.Source.Width / window.Image.Source.Height;
+
+                //double percentWidthChange = Math.Abs(e.NewSize.Width - e.PreviousSize.Width) / e.PreviousSize.Width;
+                //double percentHeightChange = Math.Abs(e.NewSize.Height - e.PreviousSize.Height) / e.PreviousSize.Height;
+
+                //if (percentWidthChange > percentHeightChange)
+                //{
+                //    window.Height = e.NewSize.Width / aspectRatio;
+                //}
+                //else
+                //{
+                //    window.Width = e.NewSize.Height * aspectRatio;
+                //}
+
                 double aspectRatio = window.Image.Source.Width / window.Image.Source.Height;
 
-                double percentWidthChange = Math.Abs(e.NewSize.Width - e.PreviousSize.Width) / e.PreviousSize.Width;
-                double percentHeightChange = Math.Abs(e.NewSize.Height - e.PreviousSize.Height) / e.PreviousSize.Height;
+                double newWidth = e.NewSize.Height * aspectRatio;
 
-                if (percentWidthChange > percentHeightChange)
-                {
-                    window.Height = e.NewSize.Width / aspectRatio;
-                }
-                else
-                {
-                    window.Width = e.NewSize.Height * aspectRatio;
-                }
+                window.Height = e.NewSize.Height;
+                window.Width = newWidth;
             }
         }
     }
