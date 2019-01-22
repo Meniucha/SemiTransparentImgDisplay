@@ -3,7 +3,7 @@
     public interface IFileDialogService
     {
         /// <summary>
-        /// Shows a Image selection dialog and returns selected images
+        /// Shows a Image selection dialog and returns selected image paths
         /// </summary>
         /// <returns>Selected images</returns>
         string[] ShowImageSelectionDialog();

@@ -29,7 +29,7 @@ namespace SemiTransparentImgDisplay.Helpers.Windows
         /// <param name="hwnd">Handle to a window</param>
         /// <param name="index">
         /// The zero-based offset to the value to be retrieved
-        /// <para>Visit https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-getwindowlonga for more info</para>
+        /// <para>Visit https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-setwindowlonga for more info</para>
         /// </param>
         /// <returns>Previous value</returns>
         [DllImport("user32.dll")]

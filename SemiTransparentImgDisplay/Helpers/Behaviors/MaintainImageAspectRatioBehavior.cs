@@ -24,6 +24,14 @@ namespace SemiTransparentImgDisplay.Helpers.Behaviors
             AssociatedObject.Loaded -= AssociatedObjectLoadedMaintainAspectRatio;
         }
 
+
+        /// <summary>
+        /// Maintains the aspect ratio of <see cref="ImageWindow.Image"/>
+        /// <para></para>
+        /// This method should be used as a handler only for the Loaded event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AssociatedObjectLoadedMaintainAspectRatio(object sender, EventArgs e)
         {
             if (sender is ImageWindow window)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Threading;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,8 +17,9 @@ namespace SemiTransparentImgDisplay.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly IDisplayService _displayService;
-        private readonly IFileDialogService fileDialogService;
+        private readonly IFileDialogService _fileDialogService;
         private readonly ISerializer _serializer;
+        private readonly DispatcherTimer _timer;
 
         /// <summary>
         /// Property for binding purposes
@@ -65,8 +67,13 @@ namespace SemiTransparentImgDisplay.ViewModel
             SaveCurrentImagesCommand = new RelayCommand(OnSaveCurrentImages);
             LoadStoredImagesCommand = new RelayCommand(OnLoadStoredImages);
             this._displayService = displayService;
-            this.fileDialogService = fileDialogService;
+            this._fileDialogService = fileDialogService;
             this._serializer = serializer;
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += (s, e) => OnSaveCurrentImages();
+            _timer.Start();
         }
 
         /// <summary>
@@ -91,7 +98,7 @@ namespace SemiTransparentImgDisplay.ViewModel
         /// </summary>
         private void OnOpenImage()
         {
-            var images = fileDialogService.ShowImageSelectionDialog();
+            var images = _fileDialogService.ShowImageSelectionDialog();
 
             foreach (var image in images)
             {

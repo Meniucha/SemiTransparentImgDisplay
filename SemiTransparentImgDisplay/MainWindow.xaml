@@ -7,9 +7,9 @@
         xmlns:model="clr-namespace:SemiTransparentImgDisplay.Model"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainViewModelWindow" 
+        Title="Image Display" 
         Height="450" 
-        Width="900"
+        Width="600"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
         >
 
@@ -80,6 +80,8 @@
                     <MenuItem Header="Remove" 
                               Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseImageCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Content}"/>
+                    <MenuItem Header="Remove all"
+                              Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseAllImagesCommand}"/>
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>

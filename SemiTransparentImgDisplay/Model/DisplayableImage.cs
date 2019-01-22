@@ -17,12 +17,14 @@ namespace SemiTransparentImgDisplay.Model
         /// <inheritdoc />
         public Window DisplayHandler => _window;
 
+        /// <inheritdoc />
         public double PosX
         {
             get => _window.Left;
             set => _window.Left = value;
         }
 
+        /// <inheritdoc />
         public double PosY
         {
             get => _window.Top;
