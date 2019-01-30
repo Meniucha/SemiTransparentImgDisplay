@@ -52,6 +52,11 @@ namespace SemiTransparentImgDisplay.Model
         bool StayOnTop { get; set; }
 
         /// <summary>
+        /// Defines if the <see cref="IDisplayableImage"/> is maximized
+        /// </summary>
+        bool IsMaximized { get; set; }
+
+        /// <summary>
         /// Path to the image
         /// </summary>
         string Path { get; set; }

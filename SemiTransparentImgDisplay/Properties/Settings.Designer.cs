@@ -43,5 +43,14 @@ namespace SemiTransparentImgDisplay.Properties {
                 this["CurrentImages"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int AutoSaveInterval {
+            get {
+                return ((int)(this["AutoSaveInterval"]));
+            }
+        }
     }
 }

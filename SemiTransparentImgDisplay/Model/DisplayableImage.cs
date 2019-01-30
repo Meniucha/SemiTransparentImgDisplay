@@ -2,17 +2,22 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using SemiTransparentImgDisplay.Helpers.Windows;
 using SemiTransparentImgDisplay.Windows;
 
 namespace SemiTransparentImgDisplay.Model
 {
-    /// <inheritdoc />
-    public class DisplayableImage : IDisplayableImage
+    /// <inheritdoc cref="IDisplayableImage" />
+    /// INotifyPropertyChanged is currently implemented only for clickable and isMaximized
+    public class DisplayableImage : ObservableObject, IDisplayableImage
     {
         private readonly ImageWindow _window;
         private bool _clickable;
+        private bool _isMaximized;
+
+        public static DisplayableImage Empty => new DisplayableImage("");
 
         /// <inheritdoc />
         public Window DisplayHandler => _window;
@@ -52,7 +57,8 @@ namespace SemiTransparentImgDisplay.Model
                 {
                     WindowsService.SetWindowExTransparent(_window);
                 }
-                _clickable = value;
+
+                Set(() => Clickable, ref _clickable, value);
             }
         }
 
@@ -61,6 +67,16 @@ namespace SemiTransparentImgDisplay.Model
         {
             get => _window.Topmost;
             set => _window.Topmost = value;
+        }
+
+        public bool IsMaximized
+        {
+            get => _isMaximized;
+            set
+            {
+                _window.WindowState = value ? WindowState.Maximized : WindowState.Normal;
+                Set(() => IsMaximized, ref _isMaximized, value);
+            }
         }
 
         /// <inheritdoc />
@@ -98,7 +114,10 @@ namespace SemiTransparentImgDisplay.Model
         public DisplayableImage(string path)
         {
             _window = new ImageWindow();
-            _window.Image.Source = new BitmapImage(new Uri(path));
+            if (!string.IsNullOrEmpty(path))
+            {
+                _window.Image.Source = new BitmapImage(new Uri(path));
+            }
             Path = path;
             _clickable = !WindowsService.IsExTransparent(_window);
 

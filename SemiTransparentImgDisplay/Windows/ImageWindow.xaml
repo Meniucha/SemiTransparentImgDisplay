@@ -22,14 +22,28 @@
         <Helpers.Behaviors:MaintainImageAspectRatioBehavior/>
     </i:Interaction.Behaviors>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding ToggleMaximizeWindowCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Close"
                       Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.CloseCommand}"
                       CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
+
+            <MenuItem Header="Toggle maximize"
+                      Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.ToggleMaximizeWindowCommand}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
+
+            <MenuItem Header="Go unclickable"
+                      Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.SetExTransparentCommand}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
         </ContextMenu>
     </Window.ContextMenu>
-
     <Grid>
         <!---ImageSource should be set when creating the window object-->
         <Image x:Name="Image"/>

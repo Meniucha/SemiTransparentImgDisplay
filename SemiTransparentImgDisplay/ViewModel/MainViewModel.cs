@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Windows;
 using System.Windows.Threading;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
@@ -55,6 +57,11 @@ namespace SemiTransparentImgDisplay.ViewModel
         public RelayCommand LoadStoredImagesCommand { get; set; }
 
         /// <summary>
+        /// Creates and displays a <see cref="IDisplayableImage"/> if the data provided in <see cref="DragEventArgs"/> is an image file/files
+        /// </summary>
+        public RelayCommand<DragEventArgs> DisplayableImageFromPathCommand { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel(IDisplayService displayService,
@@ -66,14 +73,42 @@ namespace SemiTransparentImgDisplay.ViewModel
             CloseImageCommand = new RelayCommand<IDisplayableImage>(OnCloseImage);
             SaveCurrentImagesCommand = new RelayCommand(OnSaveCurrentImages);
             LoadStoredImagesCommand = new RelayCommand(OnLoadStoredImages);
+            DisplayableImageFromPathCommand = new RelayCommand<DragEventArgs>(OnDisplayableImageFromPath);
             this._displayService = displayService;
             this._fileDialogService = fileDialogService;
             this._serializer = serializer;
 
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Interval = TimeSpan.FromSeconds(Properties.Settings.Default.AutoSaveInterval);
             _timer.Tick += (s, e) => OnSaveCurrentImages();
             _timer.Start();
+        }
+
+        /// <summary>
+        /// handler for the <see cref="DisplayableImageFromPathCommand"/>
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnDisplayableImageFromPath(DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            if (data is string[] paths)
+            {
+                foreach (var path in paths)
+                {
+                    if (IsValidImagePath(path))
+                    {
+                        _displayService.CreateAndAdd(path).Display();
+                    }
+                }
+            }
+
+
+            //checks if the provided path is a path to an image
+            bool IsValidImagePath(string path)
+            {
+                return Path.HasExtension(path) &&
+                       Properties.Settings.Default.ImageFileFormats.IndexOf(Path.GetExtension(path), StringComparison.InvariantCultureIgnoreCase) >= 0;
+            }
         }
 
         /// <summary>
@@ -102,7 +137,7 @@ namespace SemiTransparentImgDisplay.ViewModel
 
             foreach (var image in images)
             {
-                _displayService.Create(image).Display();
+                _displayService.CreateAndAdd(image).Display();
             }
         }
 

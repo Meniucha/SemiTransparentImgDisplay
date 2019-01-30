@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using SemiTransparentImgDisplay.Model;
+using SemiTransparentImgDisplay.Windows;
 
 namespace SemiTransparentImgDisplay.Services.Image
 {
@@ -19,7 +20,7 @@ namespace SemiTransparentImgDisplay.Services.Image
         /// </summary>
         /// <param name="path">Path to a image</param>
         /// <returns>Newly created <see cref="IDisplayableImage"/></returns>
-        IDisplayableImage Create(string path);
+        IDisplayableImage CreateAndAdd(string path);
 
         /// <summary>
         /// Adds the passed <see cref="IDisplayableImage"/> to the <see cref="Displayables"/> collection
@@ -32,5 +33,12 @@ namespace SemiTransparentImgDisplay.Services.Image
         /// Closes and removes all <see cref="IDisplayableImage"/>s from the <see cref="Displayables"/> collection
         /// </summary>
         void RemoveAndCloseAll();
+
+        /// <summary>
+        /// Return the <see cref="IDisplayableImage"/> which displayHandler's reference matches the passed object
+        /// </summary>
+        /// <param name="displayHandler"></param>
+        /// <returns></returns>
+        IDisplayableImage GetDisplayableImageByDisplayHandlerReference(object displayHandler);
     }
 }

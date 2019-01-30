@@ -12,7 +12,7 @@ namespace SemiTransparentImgDisplay.Services.Image
         public ObservableCollection<IDisplayableImage> Displayables { get; set; }
 
         /// <inheritdoc />
-        public IDisplayableImage Create(string path)
+        public IDisplayableImage CreateAndAdd(string path)
         {    
             IDisplayableImage displayableImage = new DisplayableImage(path);
             return this.Add(displayableImage);
@@ -34,6 +34,11 @@ namespace SemiTransparentImgDisplay.Services.Image
                 displayable.Close();
             }
             Displayables.Clear();
+        }
+
+        public IDisplayableImage GetDisplayableImageByDisplayHandlerReference(object displayHandler)
+        {
+            return Displayables.FirstOrDefault(d => ReferenceEquals(d.DisplayHandler, displayHandler));
         }
 
         /// <inheritdoc />

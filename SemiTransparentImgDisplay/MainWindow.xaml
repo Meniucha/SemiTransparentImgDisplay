@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:SemiTransparentImgDisplay"
         xmlns:model="clr-namespace:SemiTransparentImgDisplay.Model"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="Image Display" 
         Height="450" 
         Width="600"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
+        AllowDrop="True"
         >
 
     <i:Interaction.Triggers>
@@ -21,7 +23,10 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadStoredImagesCommand}"/>
         </i:EventTrigger>
-        
+        <i:EventTrigger EventName="Drop">
+            <command:EventToCommand Command="{Binding DisplayableImageFromPathCommand}" 
+                                    PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <Window.Resources>
@@ -49,7 +54,8 @@
                                         d:DataContext="{d:DesignInstance model:DisplayableImage}"
                                         Width="100"
                                         Maximum="1"
-                                        TickFrequency="0.01"/>
+                                        TickFrequency="0.01"
+                                        IsMoveToPointEnabled="True"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

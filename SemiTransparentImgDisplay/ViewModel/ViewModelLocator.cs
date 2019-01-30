@@ -35,12 +35,12 @@ namespace SemiTransparentImgDisplay.ViewModel
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
-            ////    // Create design time view services and models
+            ////    // CreateAndAdd design time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
             ////}
             ////else
             ////{
-            ////    // Create run time view services and models
+            ////    // CreateAndAdd run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
