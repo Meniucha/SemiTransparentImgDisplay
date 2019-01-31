@@ -106,6 +106,8 @@
     <Compile Include="Helpers\Behaviors\MaintainImageAspectRatioBehavior.cs" />
     <Compile Include="Helpers\Behaviors\DragMoveBehavior.cs" />
     <Compile Include="Helpers\Converters\WindowStateToHeaderConverter.cs" />
+    <Compile Include="Model\GridViewColumnCollectionModel.cs" />
+    <Compile Include="Model\GridViewColumnModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Model\DisplayableImage.cs" />
     <Compile Include="Model\IDisplayableImage.cs" />

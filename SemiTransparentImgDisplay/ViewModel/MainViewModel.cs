@@ -2,7 +2,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
@@ -62,6 +64,16 @@ namespace SemiTransparentImgDisplay.ViewModel
         public RelayCommand<DragEventArgs> DisplayableImageFromPathCommand { get; set; }
 
         /// <summary>
+        /// Saves <see cref="GridView"/>s column order and width
+        /// </summary>
+        public RelayCommand<GridView> SaveImageGridViewColumnsCommand { get; set; }
+
+        /// <summary>
+        /// Loads <see cref="GridView"/>s column order and width
+        /// </summary>
+        public RelayCommand<GridView> LoadImageGridViewColumnsCommand { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel(IDisplayService displayService,
@@ -74,6 +86,8 @@ namespace SemiTransparentImgDisplay.ViewModel
             SaveCurrentImagesCommand = new RelayCommand(OnSaveCurrentImages);
             LoadStoredImagesCommand = new RelayCommand(OnLoadStoredImages);
             DisplayableImageFromPathCommand = new RelayCommand<DragEventArgs>(OnDisplayableImageFromPath);
+            SaveImageGridViewColumnsCommand = new RelayCommand<GridView>(OnSaveImageGridViewColumns);
+            LoadImageGridViewColumnsCommand = new RelayCommand<GridView>(OnLoadImageGridViewColumns);
             this._displayService = displayService;
             this._fileDialogService = fileDialogService;
             this._serializer = serializer;
@@ -82,6 +96,38 @@ namespace SemiTransparentImgDisplay.ViewModel
             _timer.Interval = TimeSpan.FromSeconds(Properties.Settings.Default.AutoSaveInterval);
             _timer.Tick += (s, e) => OnSaveCurrentImages();
             _timer.Start();
+        }
+
+        /// <summary>
+        /// Handler for the <see cref="LoadImageGridViewColumnsCommand"/>
+        /// </summary>
+        /// <param name="grid"></param>
+        private void OnLoadImageGridViewColumns(GridView grid)
+        {
+            GridViewColumnCollectionModel columnsModel =
+                _serializer.Deserialize<GridViewColumnCollectionModel>(Properties.Settings.Default.GridViewColumns);
+
+            if (columnsModel != null && !columnsModel.Any(cm => double.IsNaN(cm.Width)))
+            {
+                //sets column width and order, Reverse() called to clone because the original IEnumerable is modified inside the foreach loop
+                foreach (var gridViewColumn in grid.Columns.Reverse())
+                {
+                    var correspondingModel = columnsModel.First(cm => cm.Header.Equals(gridViewColumn.Header));
+                    gridViewColumn.Width = correspondingModel.Width;
+                    grid.Columns.Move(grid.Columns.IndexOf(gridViewColumn), columnsModel.IndexOf(correspondingModel));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handler for the <see cref="SaveImageGridViewColumnsCommand"/>
+        /// </summary>
+        /// <param name="grid"></param>
+        private void OnSaveImageGridViewColumns(GridView grid)
+        {
+            GridViewColumnCollectionModel columns = new GridViewColumnCollectionModel(grid.Columns);
+            Properties.Settings.Default.GridViewColumns = _serializer.Serialize(columns);
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>
