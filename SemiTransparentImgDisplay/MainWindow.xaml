@@ -7,6 +7,7 @@
         xmlns:model="clr-namespace:SemiTransparentImgDisplay.Model"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:command="http://www.galasoft.ch/mvvmlight"
+        xmlns:properties="clr-namespace:SemiTransparentImgDisplay.Properties"
         mc:Ignorable="d"
         Title="Image Display" 
         Height="450" 
@@ -31,9 +32,9 @@
 
     <Window.Resources>
         <ContextMenu x:Key="WindowContextMenu">
-            <MenuItem Header="Add"
+            <MenuItem Header="{x:Static properties:MainWindowControlContent.WindowContextAddItem}"
                       Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.OpenImageCommand}"/>
-            <MenuItem Header="Remove all"
+            <MenuItem Header="{x:Static properties:MainWindowControlContent.WindowContextRemoveAllItem}"
                       Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseAllImagesCommand}"/>
         </ContextMenu>
     </Window.Resources>
@@ -45,9 +46,9 @@
         <ListView ItemsSource="{Binding Displayables}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Path"
+                    <GridViewColumn Header="{x:Static properties:MainWindowControlContent.GridViewPathColumn}"
                                     DisplayMemberBinding="{Binding Path}"/>
-                    <GridViewColumn Header="Opacity">
+                    <GridViewColumn Header="{x:Static properties:MainWindowControlContent.GridViewOpacityColumn}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Slider Value="{Binding Opacity}" 
@@ -59,7 +60,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Clickable">
+                    <GridViewColumn Header="{x:Static properties:MainWindowControlContent.GridViewClickableColumn}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding Clickable}"
@@ -67,7 +68,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Stay on top">
+                    <GridViewColumn Header="{x:Static properties:MainWindowControlContent.GridViewStayOnTopColumn}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding StayOnTop}"
@@ -80,13 +81,13 @@
             </ListView.View>
             <ListView.Resources>
                 <ContextMenu x:Key="ListViewItemContextMenu">
-                    <MenuItem Header="Add"
+                    <MenuItem Header="{x:Static properties:MainWindowControlContent.ListViewContextAddItem}"
                               Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.OpenImageCommand}"/>
                     <!--PlacementTarget type is ListViewItem -->
-                    <MenuItem Header="Remove" 
+                    <MenuItem Header="{x:Static properties:MainWindowControlContent.ListViewContextRemoveItem}" 
                               Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseImageCommand}"
                               CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Content}"/>
-                    <MenuItem Header="Remove all"
+                    <MenuItem Header="{x:Static properties:MainWindowControlContent.ListViewContextRemoveAllItem}"
                               Command="{Binding Source={StaticResource Locator}, Path=MainViewModel.CloseAllImagesCommand}"/>
                 </ContextMenu>
             </ListView.Resources>

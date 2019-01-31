@@ -105,9 +105,20 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\Behaviors\MaintainImageAspectRatioBehavior.cs" />
     <Compile Include="Helpers\Behaviors\DragMoveBehavior.cs" />
+    <Compile Include="Helpers\Converters\WindowStateToHeaderConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Model\DisplayableImage.cs" />
     <Compile Include="Model\IDisplayableImage.cs" />
+    <Compile Include="Properties\ImageWindowControlContent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageWindowControlContent.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\MainWindowControlContent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainWindowControlContent.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\Dialog\FileDialogService.cs" />
     <Compile Include="Services\Dialog\IFileDialogService.cs" />
     <Compile Include="Services\Image\IDisplayService.cs" />
@@ -152,6 +163,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\ImageWindowControlContent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImageWindowControlContent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\MainWindowControlContent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainWindowControlContent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

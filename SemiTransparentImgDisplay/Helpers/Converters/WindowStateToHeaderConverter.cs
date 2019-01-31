@@ -17,7 +17,7 @@ namespace SemiTransparentImgDisplay.Helpers.Converters
             {
                 WindowState state = (WindowState)value;
 
-                return state == WindowState.Maximized ? "Minimize" : "Maximize";
+                return state == WindowState.Maximized ? Properties.ImageWindowControlContent.ContextMenuMinimizeItem : Properties.ImageWindowControlContent.ContextMenuMaximizeItem;
             }
 
             return "Error in " + nameof(WindowStateToHeaderConverter.Convert);

@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemiTransparentImgDisplay.Windows"
         xmlns:viewModel="clr-namespace:SemiTransparentImgDisplay.ViewModel"
+        xmlns:converters="clr-namespace:SemiTransparentImgDisplay.Helpers.Converters"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Helpers.Behaviors="clr-namespace:SemiTransparentImgDisplay.Helpers.Behaviors"
+        xmlns:properties="clr-namespace:SemiTransparentImgDisplay.Properties"
         mc:Ignorable="d"
         Title="{Binding ElementName=Image, Path=Source}"
         DataContext="{Binding Source={StaticResource Locator}, Path=ImageViewModel}"
@@ -29,17 +31,24 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Window.Resources>
+        <converters:WindowStateToHeaderConverter x:Key="WindowStateToHeaderConverter"/>
+    </Window.Resources>
+
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Close"
+            <MenuItem Header="{x:Static properties:ImageWindowControlContent.ContextMenuCloseItem}"
                       Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.CloseCommand}"
                       CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
 
-            <MenuItem Header="Toggle maximize"
+            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+            <MenuItem Header="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.WindowState, 
+                                Converter={StaticResource WindowStateToHeaderConverter}}"
+
                       Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.ToggleMaximizeWindowCommand}"
                       CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
 
-            <MenuItem Header="Go unclickable"
+            <MenuItem Header="{x:Static properties:ImageWindowControlContent.ContextMenuUnclickableItem}"
                       Command="{Binding Source={StaticResource Locator}, Path=ImageViewModel.SetExTransparentCommand}"
                       CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget}"/>
         </ContextMenu>
