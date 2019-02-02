@@ -171,7 +171,7 @@ namespace SemiTransparentImgDisplay.ViewModel
         /// </summary>
         private void OnCloseAllImages()
         {
-            _displayService.RemoveAndCloseAll();
+            _displayService.RemoveAndCloseAll();  
         }
 
         /// <summary>
