@@ -14,7 +14,7 @@ or use the context menu
 
 ![Alt text](https://i.imgur.com/UcENr0d.png?raw=true "Title")
 
-Use the opacity slider to make your image translucent and click transparent
+Use the opacity slider to make your image translucent and use the checkboxes to make it unclickable
 
 ![Alt text](https://i.imgur.com/ZBF4wN8.png?raw=true "Title")
 
