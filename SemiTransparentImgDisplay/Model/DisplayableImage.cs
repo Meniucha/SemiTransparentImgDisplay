@@ -114,7 +114,7 @@ namespace SemiTransparentImgDisplay.Model
         public DisplayableImage(string path)
         {
             _window = new ImageWindow();
-            if (!string.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
             {
                 _window.Image.Source = new BitmapImage(new Uri(path));
             }

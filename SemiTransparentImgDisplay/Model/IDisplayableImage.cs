@@ -6,6 +6,8 @@ namespace SemiTransparentImgDisplay.Model
 {
     /// <summary>
     /// Object that can be displayed and closed
+    /// TODO Simplify dependencies by making ImageWindow inherit from IDisplayableImage
+    /// TODO    -----------------------------------------------------------------
     /// </summary>
     public interface IDisplayableImage
     {

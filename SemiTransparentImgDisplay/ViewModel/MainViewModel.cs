@@ -209,7 +209,14 @@ namespace SemiTransparentImgDisplay.ViewModel
             {
                 foreach (var displayableImage in images)
                 {
-                    _displayService.Add(displayableImage).Display();
+                    if (File.Exists(displayableImage.Path))
+                    {
+                        _displayService.Add(displayableImage).Display();
+                    }
+                    else
+                    {
+                        _displayService.Displayables.Remove(displayableImage);
+                    }
                 }
             }
         }
